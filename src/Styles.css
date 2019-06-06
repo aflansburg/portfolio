@@ -5,11 +5,11 @@
   -o-background-size: cover;
   background-size: cover;
   min-height: 100%;
-  -webkit-animation: 100s scroll infinite linear;
+  /* -webkit-animation: 100s scroll infinite linear;
   -moz-animation: 100s scroll infinite linear;
   -o-animation: 100s scroll infinite linear;
   -ms-animation: 100s scroll infinite linear;
-  animation: 100s scroll infinite linear;
+  animation: 100s scroll infinite linear; */
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
