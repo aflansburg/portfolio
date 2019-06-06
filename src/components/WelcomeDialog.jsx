@@ -44,7 +44,7 @@ export default function(props) {
           setWelcomeDialog(false);
         }}
       >
-        <DialogTitle>
+        <DialogTitle disableTypography>
           <Typography
             variant="h6"
             style={{
@@ -105,7 +105,7 @@ export default function(props) {
         }}
         maxWidth="xl"
       >
-        <DialogContent>
+        <DialogContent disableTypography>
           <ReactMarkdown
             source={source || ""}
             renderers={{ code: CodeBlock }}

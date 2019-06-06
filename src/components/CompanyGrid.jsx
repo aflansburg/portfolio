@@ -1,13 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {
-  Divider,
-  GridList,
-  GridListTile,
-  IconButton,
-  Tooltip
-} from "@material-ui/core";
+import { GridList, GridListTile, IconButton, Tooltip } from "@material-ui/core";
 import CodeIcon from "@material-ui/icons/Code";
 import companyData from "../data/companyData";
 

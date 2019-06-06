@@ -10,8 +10,7 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
-  Tooltip,
-  Divider
+  Tooltip
 } from "@material-ui/core";
 import ReactMarkdown from "react-markdown";
 import InfoIcon from "@material-ui/icons/Info";
@@ -41,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 export default function() {
   const classes = useStyles();
   const wide = useMediaQuery("(min-width:1000px)");
-  const mobile = useMediaQuery("(max-width:500px");
   const [open, setOpen] = useState(false);
   const [codeBehindOpen, setCodeBehindOpen] = useState(false);
   const [industryText, setIndustryText] = useState(null);

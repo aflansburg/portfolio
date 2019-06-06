@@ -67,17 +67,11 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles();
   const med = useMediaQuery("(min-width:960px)");
-  const mobileHeight = useMediaQuery("(min-height:812px)");
   const show = localStorage.getItem("showWelcome") === "false" ? false : true;
   const [source, setSource] = useState();
   const [bioText, setBio] = useState();
   const [codeBehindOpen, setCodeBehindOpen] = useState(false);
-  const [welcomeDialog, setWelcomeDialog] = useState(show);
-
-  function hideWelcome() {
-    localStorage.setItem("showWelcome", false);
-    setWelcomeDialog(false);
-  }
+  const [expandedBio, setExpandedBio] = useState(false);
 
   useEffect(() => {
     fetch(AppCodeBlock)
@@ -138,7 +132,11 @@ function App() {
                         );
                       }}
                     >
-                      <img src={linkedin} style={{ width: 40 }} />
+                      <img
+                        src={linkedin}
+                        style={{ width: 40 }}
+                        alt="LinkedIn"
+                      />
                     </IconButton>
                   </Tooltip>
                 </Grid>
@@ -164,9 +162,22 @@ function App() {
             <Grid item>
               <Paper className={classes.bio}>
                 <ReactMarkdown
-                  source={bioText || ""}
+                  source={
+                    bioText
+                      ? expandedBio
+                        ? bioText
+                        : `${bioText.substring(0, 807)}...`
+                      : "loading"
+                  }
                   renderers={{ text: TextMarkdown }}
                 />
+                <Button
+                  onClick={() => {
+                    setExpandedBio(!expandedBio);
+                  }}
+                >
+                  {!expandedBio ? "Read More" : "Show Less"}
+                </Button>
               </Paper>
             </Grid>
           </Grid>
@@ -222,7 +233,7 @@ function App() {
             />
           </DialogContent>
         </Dialog>
-        <WelcomeDialog open={welcomeDialog} />
+        <WelcomeDialog open={show} />
       </Container>
     </div>
   );

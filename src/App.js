@@ -70,7 +70,6 @@ function App() {
   const [source, setSource] = useState();
   const [bioText, setBio] = useState();
   const [codeBehindOpen, setCodeBehindOpen] = useState(false);
-  const [welcomeDialog, setWelcomeDialog] = useState(show);
   const [expandedBio, setExpandedBio] = useState(false);
 
   useEffect(() => {
@@ -132,7 +131,11 @@ function App() {
                         );
                       }}
                     >
-                      <img src={linkedin} style={{ width: 40 }} />
+                      <img
+                        src={linkedin}
+                        style={{ width: 40 }}
+                        alt="LinkedIn"
+                      />
                     </IconButton>
                   </Tooltip>
                 </Grid>
@@ -169,10 +172,10 @@ function App() {
                 />
                 <Button
                   onClick={() => {
-                    setExpandedBio(true);
+                    setExpandedBio(!expandedBio);
                   }}
                 >
-                  Load more
+                  {!expandedBio ? "Read More" : "Show Less"}
                 </Button>
               </Paper>
             </Grid>
@@ -229,7 +232,7 @@ function App() {
             />
           </DialogContent>
         </Dialog>
-        <WelcomeDialog open={welcomeDialog} />
+        <WelcomeDialog open={show} />
       </Container>
     </div>
   );

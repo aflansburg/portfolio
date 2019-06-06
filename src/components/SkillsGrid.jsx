@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
-  Divider,
   Tooltip
 } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
