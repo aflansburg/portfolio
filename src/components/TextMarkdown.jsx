@@ -9,16 +9,16 @@ class TextMarkdown extends PureComponent {
   render() {
     const { value } = this.props;
     return value !== "loading" ? (
-      <div
+      <span
         style={{
           fontFamily: `"Trebuchet MS", Helvetica, sans-serif`,
           lineHeight: "1.75rem"
         }}
       >
         {value}
-      </div>
+      </span>
     ) : (
-      <React.Fragment>"Loading Biography....."</React.Fragment>
+      <React.Fragment>Loading Biography.....</React.Fragment>
     );
   }
 }
