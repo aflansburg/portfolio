@@ -1,10 +1,10 @@
-import automotive from "../images/industry_images/optimized/automotive.webp";
-import datacenter from "../images/industry_images/optimized/datacenter.webp";
-import ecommerce from "../images/industry_images/optimized/ecommerce.webp";
-import mfg from "../images/industry_images/optimized/mfg.webp";
-import oil_and_gas from "../images/industry_images/optimized/oil_and_gas.webp";
-import geophysical from "../images/industry_images/optimized/geophysical_marine.webp";
-import government from "../images/industry_images/optimized/government.webp";
+import automotive from "../images/industry_images/automotive.jpeg";
+import datacenter from "../images/industry_images/datacenter.jpeg";
+import ecommerce from "../images/industry_images/ecommerce.jpg";
+import mfg from "../images/industry_images/mfg.jpeg";
+import oil_and_gas from "../images/industry_images/oil_and_gas.jpeg";
+import geophysical from "../images/industry_images/geophysical_marine.jpg";
+import government from "../images/industry_images/government.jpeg";
 
 export default [
   {
