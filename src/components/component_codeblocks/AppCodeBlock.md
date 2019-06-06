@@ -27,19 +27,33 @@ const useStyles = makeStyles(theme => ({
     background: "#66827e"
   },
   bigAvatar: {
-    margin: 10,
+    margin: 4,
     width: 60,
     height: 60
+  },
+  smallAvatar: {
+    margin: 4,
+    width: 40,
+    height: 40
   },
   headerIconButton: {
     background: "#fff",
     margin: 12
-  }
+  },
+  mobileIconContainer: {
+    position: "absolute",
+    right: "1rem",
+    flexGrow: "unset",
+    flexBasis: "unset"
+  },
+  nonMobileIconContainer: {}
 }));
 
 function App() {
   const classes = useStyles();
   const med = useMediaQuery("(min-width:960px)");
+  const sm = useMediaQuery("(max-width:600px)");
+  const xs = useMediaQuery("(max-width:500px");
   const show = localStorage.getItem("showWelcome") === "false" ? false : true;
   const [source, setSource] = useState();
   const [animateBg, setAnimateBg] = useState(false);
@@ -68,27 +82,50 @@ function App() {
       <Container maxWidth="xl" className={classes.root}>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <Avatar
-              alt="Abram Flansburg"
-              src={profileAvatar}
-              className={classes.bigAvatar}
-            />
-            <Grid
-              container
-              justify="space-between"
-              alignItems="center"
-              style={{ padding: 12 }}
-            >
-              <Grid item>
-                <Typography variant="h6">Abram Flansburg</Typography>
-                <Typography variant="overline">Software Developer</Typography>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid
+                item
+                container
+                spacing={2}
+                xs={7}
+                sm={6}
+                md={4}
+                alignItems="center"
+              >
+                <Grid item xs={4} lg={3}>
+                  <Avatar
+                    alt="Abram Flansburg"
+                    src={profileAvatar}
+                    className={sm ? classes.smallAvatar : classes.bigAvatar}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant={!sm ? "h6" : "subtitle1"}
+                    style={{ fontSize: sm && 12 }}
+                  >
+                    Abram Flansburg
+                  </Typography>
+                  <Typography
+                    variant={!sm ? "overline" : "subtitle1"}
+                    style={{ fontSize: sm && 10 }}
+                  >
+                    Software Developer
+                  </Typography>
+                </Grid>
               </Grid>
               <Grid
                 item
                 container
-                xs={3}
-                justify={med ? "flex-end" : "center"}
+                justify="flex-end"
                 alignItems="center"
+                sm={6}
+                xl={6}
+                className={
+                  sm
+                    ? classes.mobileIconContainer
+                    : classes.nonMobileIconContainer
+                }
               >
                 <Grid item>
                   <Tooltip
@@ -106,9 +143,11 @@ function App() {
                       size="small"
                     >
                       {animateBg ? (
-                        <PauseCircleOutline fontSize="large" />
+                        <PauseCircleOutline
+                          fontSize={!sm ? "large" : "small"}
+                        />
                       ) : (
-                        <PlayCircleOutline fontSize="large" />
+                        <PlayCircleOutline fontSize={!sm ? "large" : "small"} />
                       )}
                     </IconButton>
                   </Tooltip>
@@ -120,7 +159,7 @@ function App() {
                       onClick={handleSourceCodeClick}
                       size="small"
                     >
-                      <CodeIconOutline fontSize="large" />
+                      <CodeIconOutline fontSize={!sm ? "large" : "small"} />
                     </IconButton>
                   </Tooltip>
                 </Grid>
@@ -129,7 +168,7 @@ function App() {
                     <IconButton onClick={handleLinkedInClick}>
                       <img
                         src={linkedin}
-                        style={{ width: 40 }}
+                        style={{ width: !sm ? 40 : 24 }}
                         alt="LinkedIn"
                       />
                     </IconButton>
@@ -215,4 +254,5 @@ function App() {
 }
 
 export default App;
+
 ```

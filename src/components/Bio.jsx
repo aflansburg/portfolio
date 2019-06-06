@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ReactMarkdown from "react-markdown";
 import TextMarkdown from "./TextMarkdown";
 import Bio from "../data/bio.md";
@@ -14,6 +15,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function() {
   const classes = useStyles();
+  const med = useMediaQuery("(min-width:960px)");
+  const sm = useMediaQuery("(max-width:600px)");
+  const xs = useMediaQuery("(max-width:500px");
   const [bioText, setBio] = useState();
   const [expandedBio, setExpandedBio] = useState(false);
 
@@ -34,7 +38,9 @@ export default function() {
           bioText
             ? expandedBio
               ? bioText
-              : `${bioText.substring(0, 807)}...`
+              : `${
+                  xs ? bioText.substring(0, 362) : bioText.substring(0, 400)
+                }...`
             : "loading"
         }
         renderers={{ text: TextMarkdown }}
