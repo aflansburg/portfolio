@@ -1,43 +1,16 @@
 ```
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CodeIconOutline from "@material-ui/icons/CodeOutlined";
-import CompanyGrid from "./components/CompanyGrid";
-import Expansions from "./components/Expansions";
-import profileAvatar from "./images/profile.jpeg";
-import IndustryGrid from "./components/IndustryGrid";
-import SkillsGrid from "./components/SkillsGrid";
-import {
-  Paper,
-  Dialog,
-  DialogContent,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Avatar,
-  Container,
-  Grid,
-  Divider,
-  Tooltip
-} from "@material-ui/core";
-import ReactMarkdown from "react-markdown";
-import linkedin from "./images/linkedin.png";
-import CodeBlock from "./components/CodeBlock";
-import TextMarkdown from "./components/TextMarkdown";
-import AppCodeBlock from "./components/component_codeblocks/AppCodeBlock.md";
-import WelcomeDialog from "./components/WelcomeDialog";
-import Bio from "./data/bio.md";
-import "./Styles.css";
+import React, { useState, useEffect } from "react" ... // truncated
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
-  menuButton: {
-    marginRight: theme.spacing(2)
+  bg: {
+    "-webkit-animation": "100s scroll infinite linear",
+    "-moz-animation": "100s scroll infinite linear",
+    "-o-animation": "100s scroll infinite linear",
+    "-ms-animation": "100s scroll infinite linear",
+    animation: "100s scroll infinite linear"
   },
   title: {
     flexGrow: 1
@@ -58,9 +31,9 @@ const useStyles = makeStyles(theme => ({
     width: 60,
     height: 60
   },
-  bio: {
-    padding: 12,
-    background: "rgba(255,255,255,0.9)"
+  headerIconButton: {
+    background: "#fff",
+    margin: 12
   }
 }));
 
@@ -69,9 +42,8 @@ function App() {
   const med = useMediaQuery("(min-width:960px)");
   const show = localStorage.getItem("showWelcome") === "false" ? false : true;
   const [source, setSource] = useState();
-  const [bioText, setBio] = useState();
+  const [animateBg, setAnimateBg] = useState(false);
   const [codeBehindOpen, setCodeBehindOpen] = useState(false);
-  const [expandedBio, setExpandedBio] = useState(false);
 
   useEffect(() => {
     fetch(AppCodeBlock)
@@ -79,13 +51,20 @@ function App() {
       .then(md => {
         setSource(md);
       });
-    fetch(Bio)
-      .then(res => res.text())
-      .then(b => setBio(b));
   });
 
+  const handleSourceCodeClick = () => {
+    setCodeBehindOpen(!codeBehindOpen);
+  };
+  const handleLinkedInClick = () => {
+    window.location.assign("https://www.linkedin.com/in/abramflansburg/");
+  };
+  const handleAnimateBgClick = () => {
+    setAnimateBg(!animateBg);
+  };
+
   return (
-    <div className="Root">
+    <div className={animateBg ? classNames(classes.bg, "Root") : "Root"}>
       <Container maxWidth="xl" className={classes.root}>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
@@ -112,26 +91,42 @@ function App() {
                 alignItems="center"
               >
                 <Grid item>
+                  <Tooltip
+                    title={
+                      <span>
+                        Toggle background animation.
+                        <br />
+                        May not work in older browser versions.
+                      </span>
+                    }
+                  >
+                    <IconButton
+                      onClick={handleAnimateBgClick}
+                      className={classes.headerIconButton}
+                      size="small"
+                    >
+                      {animateBg ? (
+                        <PauseCircleOutline fontSize="large" />
+                      ) : (
+                        <PlayCircleOutline fontSize="large" />
+                      )}
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+                <Grid item>
                   <Tooltip title="View source code for main component (App.js)">
                     <IconButton
-                      style={{ background: "#fff" }}
-                      onClick={() => {
-                        setCodeBehindOpen(true);
-                      }}
+                      className={classes.headerIconButton}
+                      onClick={handleSourceCodeClick}
+                      size="small"
                     >
-                      <CodeIconOutline />
+                      <CodeIconOutline fontSize="large" />
                     </IconButton>
                   </Tooltip>
                 </Grid>
                 <Grid item>
                   <Tooltip title="Click here to add me on LinkedIn">
-                    <IconButton
-                      onClick={() => {
-                        window.location.assign(
-                          "https://www.linkedin.com/in/abramflansburg/"
-                        );
-                      }}
-                    >
+                    <IconButton onClick={handleLinkedInClick}>
                       <img
                         src={linkedin}
                         style={{ width: 40 }}
@@ -160,25 +155,7 @@ function App() {
             </Grid>
             <Divider />
             <Grid item>
-              <Paper className={classes.bio}>
-                <ReactMarkdown
-                  source={
-                    bioText
-                      ? expandedBio
-                        ? bioText
-                        : `${bioText.substring(0, 807)}...`
-                      : "loading"
-                  }
-                  renderers={{ text: TextMarkdown }}
-                />
-                <Button
-                  onClick={() => {
-                    setExpandedBio(!expandedBio);
-                  }}
-                >
-                  {!expandedBio ? "Read More" : "Show Less"}
-                </Button>
-              </Paper>
+              <Bio />
             </Grid>
           </Grid>
           <Grid item container direction="column" xs={12} sm={6} spacing={2}>
@@ -222,9 +199,7 @@ function App() {
           open={codeBehindOpen}
           fullScreen={false}
           maxWidth="xl"
-          onClose={() => {
-            setCodeBehindOpen(false);
-          }}
+          onClose={handleSourceCodeClick}
         >
           <DialogContent>
             <ReactMarkdown

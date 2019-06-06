@@ -29,10 +29,14 @@ export default function(props) {
       });
   });
 
-  function hideWelcome() {
+  const handleHideWelcome = () => {
     localStorage.setItem("showWelcome", false);
     setWelcomeDialog(false);
-  }
+  };
+
+  const handleShowCodeBlock = () => {
+    setShowCodeBlock(!showCodeBlock);
+  };
 
   return (
     <React.Fragment>
@@ -75,11 +79,7 @@ export default function(props) {
             <br />
             <br />
             When you see this icon,{" "}
-            <IconButton
-              onClick={() => {
-                setShowCodeBlock(true);
-              }}
-            >
+            <IconButton onClick={handleShowCodeBlock}>
               <CodeIcon />
             </IconButton>
             , you can click and see the source code behind the various React
@@ -89,23 +89,11 @@ export default function(props) {
         </DialogContent>
         <Divider />
         <DialogActions style={{ marginTop: 4 }}>
-          <Button
-            onClick={() => {
-              hideWelcome();
-            }}
-          >
-            Don't show this next time
-          </Button>
+          <Button onClick={handleHideWelcome}>Don't show this next time</Button>
         </DialogActions>
       </Dialog>
-      <Dialog
-        open={showCodeBlock}
-        onClose={() => {
-          setShowCodeBlock(false);
-        }}
-        maxWidth="xl"
-      >
-        <DialogContent disableTypography>
+      <Dialog open={showCodeBlock} onClose={handleShowCodeBlock} maxWidth="xl">
+        <DialogContent>
           <ReactMarkdown
             source={source || ""}
             renderers={{ code: CodeBlock }}

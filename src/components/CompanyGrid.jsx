@@ -28,6 +28,11 @@ const useStyles = makeStyles(theme => ({
 export default function() {
   const classes = useStyles();
   const wide = useMediaQuery("(min-width:1000px)");
+
+  const handleClickCompany = url => {
+    window.open(url, "_blank");
+  };
+
   return (
     <div className={classes.root}>
       <GridList
@@ -55,9 +60,7 @@ export default function() {
           <GridListTile
             key={index}
             cols={wide ? company.cols || 1 : 4}
-            onClick={() => {
-              window.open(company.url, "_blank");
-            }}
+            onClick={() => handleClickCompany(company.url)}
             className={classes.gridListTile}
           >
             <img

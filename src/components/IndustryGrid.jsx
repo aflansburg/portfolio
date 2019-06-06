@@ -53,6 +53,14 @@ export default function() {
       });
   });
 
+  const handleClickSourceCode = () => {
+    setCodeBehindOpen(!codeBehindOpen);
+  };
+  const handleIndustryInfoClick = (open, text) => {
+    setOpen(open);
+    setIndustryText(text);
+  };
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={140} cols={4} className={classes.gridList}>
@@ -66,11 +74,7 @@ export default function() {
           }}
         >
           <Tooltip title="View source code">
-            <IconButton
-              onClick={() => {
-                setCodeBehindOpen(true);
-              }}
-            >
+            <IconButton onClick={handleClickSourceCode}>
               <CodeIcon />
             </IconButton>
           </Tooltip>
@@ -88,8 +92,7 @@ export default function() {
                 <IconButton
                   className={classes.icon}
                   onClick={() => {
-                    setOpen(true);
-                    setIndustryText(industry.text);
+                    handleIndustryInfoClick(true, industry.text);
                   }}
                 >
                   <InfoIcon />
@@ -102,9 +105,8 @@ export default function() {
       <Dialog
         open={open}
         fullScreen={false}
-        onClose={() => {
-          setOpen(false);
-          setIndustryText(null);
+        onClose={industry => {
+          handleIndustryInfoClick(false, industry.text);
         }}
       >
         <DialogContent>
@@ -117,9 +119,7 @@ export default function() {
         open={codeBehindOpen}
         fullScreen={false}
         maxWidth="xl"
-        onClose={() => {
-          setCodeBehindOpen(false);
-        }}
+        onClose={handleClickSourceCode}
       >
         <DialogContent>
           <ReactMarkdown

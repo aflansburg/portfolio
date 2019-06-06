@@ -44,6 +44,11 @@ export default function() {
   const [open, setOpen] = useState(false);
   const [skillText, setSkillsText] = useState(null);
 
+  const handleClickSkillInfo = (open, text) => {
+    setOpen(open);
+    setSkillsText(text);
+  };
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={140} cols={4} className={classes.gridList}>
@@ -78,9 +83,8 @@ export default function() {
               actionIcon={
                 <IconButton
                   className={classes.icon}
-                  onClick={() => {
-                    setOpen(true);
-                    setSkillsText(skill.text);
+                  onClick={skill => {
+                    handleClickSkillInfo(true, skill.text);
                   }}
                 >
                   <InfoIcon />
@@ -94,8 +98,7 @@ export default function() {
         open={open}
         fullScreen={false}
         onClose={() => {
-          setOpen(false);
-          setSkillsText(null);
+          handleClickSkillInfo(false, null);
         }}
       >
         <DialogContent>

@@ -1,20 +1,5 @@
 ```
-import React, { useState, useEffect } from "react";
-import CodeIcon from "@material-ui/icons/Code";
-import CloseIcon from "@material-ui/icons/Close";
-import {
-  Dialog,
-  DialogContent,
-  Typography,
-  Button,
-  IconButton,
-  DialogContentText,
-  DialogActions,
-  DialogTitle
-} from "@material-ui/core";
-import ReactMarkdown from "react-markdown";
-import CodeBlock from "./CodeBlock";
-import WelcomeDialogCodeBlock from "./component_codeblocks/WelcomeDialogCodeBlock.md";
+import React, { useState, useEffect } from "react"; ... // truncated
 
 export default function(props) {
   const [welcomeDialog, setWelcomeDialog] = useState(props.open);
@@ -29,10 +14,14 @@ export default function(props) {
       });
   });
 
-  function hideWelcome() {
+  const handleHideWelcome = () => {
     localStorage.setItem("showWelcome", false);
     setWelcomeDialog(false);
-  }
+  };
+
+  const handleShowCodeBlock = () => {
+    setShowCodeBlock(!showCodeBlock);
+  };
 
   return (
     <React.Fragment>
@@ -44,52 +33,51 @@ export default function(props) {
           setWelcomeDialog(false);
         }}
       >
-        <DialogTitle>
-          <IconButton
-            style={{ float: "right" }}
-            onClick={() => {
-              setWelcomeDialog(false);
+        <DialogTitle disableTypography>
+          <Typography
+            variant="h6"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Greetings! Thanks for visiting. I have written this site in React
-            utilizing the Material design spec from Google. I have also utilized
-            their Material-UI library to create a responsive experience. <br />
-            <br />
-          </DialogContentText>
-          <Typography>
-            When you see this icon,{" "}
+            Welcome!
             <IconButton
+              style={{ float: "right" }}
               onClick={() => {
-                setShowCodeBlock(true);
+                setWelcomeDialog(false);
               }}
             >
+              <CloseIcon />
+            </IconButton>
+          </Typography>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <DialogContentText>
+            Greetings! Thanks for checking out my portfolio site. I have written
+            this site in React.js utilizing the Material design spec from
+            Google. I have also utilized their Material-UI library to create a
+            responsive experience. If you're on your mobile device, try rotating
+            your screen to checkout the landscape view!
+            <br />
+            <br />
+            When you see this icon,{" "}
+            <IconButton onClick={handleShowCodeBlock}>
               <CodeIcon />
             </IconButton>
             , you can click and see the source code behind the various React
-            elements
-          </Typography>
+            elements. Go ahead and try clicking that button in this sentence
+            now!
+          </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              hideWelcome();
-            }}
-          >
-            Don't show this next time
-          </Button>
+        <Divider />
+        <DialogActions style={{ marginTop: 4 }}>
+          <Button onClick={handleHideWelcome}>Don't show this next time</Button>
         </DialogActions>
       </Dialog>
-      <Dialog
-        open={showCodeBlock}
-        onClose={() => {
-          setShowCodeBlock(false);
-        }}
-      >
+      <Dialog open={showCodeBlock} onClose={handleShowCodeBlock} maxWidth="xl">
         <DialogContent>
           <ReactMarkdown
             source={source || ""}
@@ -100,4 +88,5 @@ export default function(props) {
     </React.Fragment>
   );
 }
+
 ```

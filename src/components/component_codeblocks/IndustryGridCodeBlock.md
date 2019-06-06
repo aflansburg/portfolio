@@ -1,24 +1,5 @@
 ```
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import industryData from "../data/industryData";
-import {
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  IconButton,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  Tooltip,
-  Divider
-} from "@material-ui/core";
-import ReactMarkdown from "react-markdown";
-import InfoIcon from "@material-ui/icons/Info";
-import CodeIcon from "@material-ui/icons/Code";
-import CodeBlock from "./CodeBlock";
-import IndustryCodeBlock from "./component_codeblocks/IndustryGridCodeBlock.md";
+import React, { useState, useEffect } from "react"; ... // truncated
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,6 +36,14 @@ export default function() {
       });
   });
 
+  const handleClickSourceCode = () => {
+    setCodeBehindOpen(!codeBehindOpen);
+  };
+  const handleIndustryInfoClick = (open, text) => {
+    setOpen(open);
+    setIndustryText(text);
+  };
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={140} cols={4} className={classes.gridList}>
@@ -68,11 +57,7 @@ export default function() {
           }}
         >
           <Tooltip title="View source code">
-            <IconButton
-              onClick={() => {
-                setCodeBehindOpen(true);
-              }}
-            >
+            <IconButton onClick={handleClickSourceCode}>
               <CodeIcon />
             </IconButton>
           </Tooltip>
@@ -90,8 +75,7 @@ export default function() {
                 <IconButton
                   className={classes.icon}
                   onClick={() => {
-                    setOpen(true);
-                    setIndustryText(industry.text);
+                    handleIndustryInfoClick(true, industry.text);
                   }}
                 >
                   <InfoIcon />
@@ -104,9 +88,8 @@ export default function() {
       <Dialog
         open={open}
         fullScreen={false}
-        onClose={() => {
-          setOpen(false);
-          setIndustryText(null);
+        onClose={industry => {
+          handleIndustryInfoClick(false, industry.text);
         }}
       >
         <DialogContent>
@@ -118,9 +101,8 @@ export default function() {
       <Dialog
         open={codeBehindOpen}
         fullScreen={false}
-        onClose={() => {
-          setCodeBehindOpen(false);
-        }}
+        maxWidth="xl"
+        onClose={handleClickSourceCode}
       >
         <DialogContent>
           <ReactMarkdown
@@ -132,4 +114,5 @@ export default function() {
     </div>
   );
 }
+
 ```
