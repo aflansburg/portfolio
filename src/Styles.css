@@ -1,0 +1,48 @@
+.Root {
+  background: url("./brick-signed-mono-xs.jpg") center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100%;
+  -webkit-animation: 100s scroll infinite linear;
+  -moz-animation: 100s scroll infinite linear;
+  -o-animation: 100s scroll infinite linear;
+  -ms-animation: 100s scroll infinite linear;
+  animation: 100s scroll infinite linear;
+}
+@-webkit-keyframes scroll {
+  100% {
+    background-position: 0px -3000px;
+  }
+}
+
+@-moz-keyframes scroll {
+  100% {
+    background-position: 0px -3000px;
+  }
+}
+
+@-o-keyframes scroll {
+  100% {
+    background-position: 0px -3000px;
+  }
+}
+
+@-ms-keyframes scroll {
+  100% {
+    background-position: 0px -3000px;
+  }
+}
+
+@keyframes scroll {
+  100% {
+    background-position: 0px -3000px;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .Root {
+    position: fixed;
+  }
+}

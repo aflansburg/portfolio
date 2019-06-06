@@ -1,3 +1,4 @@
+```
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -66,12 +67,17 @@ const useStyles = makeStyles(theme => ({
 function App() {
   const classes = useStyles();
   const med = useMediaQuery("(min-width:960px)");
+  const mobileHeight = useMediaQuery("(min-height:812px)");
   const show = localStorage.getItem("showWelcome") === "false" ? false : true;
   const [source, setSource] = useState();
   const [bioText, setBio] = useState();
   const [codeBehindOpen, setCodeBehindOpen] = useState(false);
   const [welcomeDialog, setWelcomeDialog] = useState(show);
-  const [expandedBio, setExpandedBio] = useState(false);
+
+  function hideWelcome() {
+    localStorage.setItem("showWelcome", false);
+    setWelcomeDialog(false);
+  }
 
   useEffect(() => {
     fetch(AppCodeBlock)
@@ -158,22 +164,9 @@ function App() {
             <Grid item>
               <Paper className={classes.bio}>
                 <ReactMarkdown
-                  source={
-                    bioText
-                      ? expandedBio
-                        ? bioText
-                        : `${bioText.substring(0, 807)}...`
-                      : "loading"
-                  }
+                  source={bioText || ""}
                   renderers={{ text: TextMarkdown }}
                 />
-                <Button
-                  onClick={() => {
-                    setExpandedBio(true);
-                  }}
-                >
-                  Load more
-                </Button>
               </Paper>
             </Grid>
           </Grid>
@@ -236,3 +229,4 @@ function App() {
 }
 
 export default App;
+```
