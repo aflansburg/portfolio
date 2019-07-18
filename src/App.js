@@ -10,6 +10,7 @@ import Expansions from "./components/Expansions";
 import profileAvatar from "./images/profile.jpeg";
 import IndustryGrid from "./components/IndustryGrid";
 import SkillsGrid from "./components/SkillsGrid";
+import RecentProject from "./components/RecentProject";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +22,8 @@ import {
   Container,
   Grid,
   Divider,
-  Tooltip
+  Tooltip,
+  Hidden
 } from "@material-ui/core";
 import ReactMarkdown from "react-markdown";
 import linkedin from "./images/linkedin.png";
@@ -266,7 +268,20 @@ function App() {
               </Expansions>
             </Grid>
           </Grid>
+          <Grid
+            item
+            container
+            direction="row"
+            style={{ margin: "0 14px 0 14px" }}
+          >
+            <Grid item xs={12}>
+              <Expansions headline={"Most Recent Project"}>
+                <RecentProject />
+              </Expansions>
+            </Grid>
+          </Grid>
         </Grid>
+
         <Dialog
           open={codeBehindOpen}
           fullScreen={false}
